@@ -85,7 +85,8 @@ public class Start extends AppCompatActivity {
     private void go_to_user_act() {
         intent_loged_in.putExtra("LOGIN", login_connected);
         intent_loged_in.putExtra("PASSWORD", password_connected);
-
+        intent_loged_in.putExtra("public_key_0", public_key_0);
+        intent_loged_in.putExtra("public_key_1", public_key_1);
 
 
         startActivity(intent_loged_in);

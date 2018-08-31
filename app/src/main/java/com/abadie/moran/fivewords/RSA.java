@@ -12,8 +12,6 @@ public class RSA {
         BigInteger[] keys = calculateKeys();
         keys[0] = new BigInteger(public_0);
         keys[2] = new BigInteger(public_1);
-        Log.d("keys[0]", keys[0].toString());
-        Log.d("keys[2]", keys[2].toString());
         // Uses the calculateKeys method to generate key pairs
         BigInteger[] cypher = encrypt(line, keys);
         // The encrypt method encrypts the message and stores it as cypher
