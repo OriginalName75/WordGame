@@ -25,6 +25,11 @@ public class MainActivity extends AppCompatActivity {
     private String[][] letters = new String[5][5];
     private int old_i = -1;
     private int old_j = -1;
+    private String public_key_1 = "";
+    private String public_key_0 = "";
+    private String login_connected = "";
+    private String password_connected = "";
+    private String crypted_password = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +39,16 @@ public class MainActivity extends AppCompatActivity {
         edit_text_box = findViewById(R.id.textinputcho);
         button = findViewById(R.id.button);
         read_boxes();
+    }
+
+    @Override
+    public void onResume() {
+        login_connected = getIntent().getStringExtra("LOGIN");
+        password_connected = getIntent().getStringExtra("PASSWORD");
+        public_key_0 = getIntent().getStringExtra("public_key_0");
+        public_key_1 = getIntent().getStringExtra("public_key_1");
+        crypted_password = RSA.crypt(password_connected, public_key_0, public_key_1);
+        super.onResume();
     }
     public void sendMessage(View view) {
         if (choosing_letter) {

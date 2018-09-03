@@ -2,11 +2,14 @@ package com.abadie.moran.fivewords;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -32,6 +35,7 @@ public class LogedIn extends AppCompatActivity {
     private String login_connected = "";
     private String password_connected = "";
     private Intent intent_start;
+    private Intent intent_game;
     private TextView hello_text;
     private EditText new_friend;
     private TextView error_message_friend;
@@ -60,7 +64,7 @@ public class LogedIn extends AppCompatActivity {
         queue = Volley.newRequestQueue(this);
         lisFriendView = findViewById(R.id.FriendListRequest);
         listFriendView = findViewById(R.id.friend_list_id);
-
+        intent_game = new Intent(this, MainActivity.class);
 
 
     }
@@ -146,29 +150,64 @@ public class LogedIn extends AppCompatActivity {
         try {
             CacheDir.writeAllCachedText(getApplicationContext(),  "USERDATA",
                     "");
-            startActivity(intent_start);
 
+
+            startActivity(intent_start);
         }finally {
 
         }
     }
-    private void add_friend_list_views(int id, String name, double mmr) {
+
+    private void start_or_continue_game(int id, Button b) {
+        final int id_f = id;
+        b.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                intent_game.putExtra("LOGIN", login_connected);
+                intent_game.putExtra("PASSWORD", password_connected);
+                intent_game.putExtra("public_key_0", public_key_0);
+                intent_game.putExtra("public_key_1", public_key_1);
+                startActivity(intent_game);
+            }
+        });
+    }
+    private void add_friend_list_views(int id, String name, double mmr, boolean game_started) {
 
         LinearLayout horlay = new LinearLayout(this);
         horlay.setOrientation(LinearLayout.HORIZONTAL);
+        horlay.setGravity(Gravity.CENTER);
+        GradientDrawable border = new GradientDrawable();
+        border.setColor(0xFFFFFFFF); //white background
+        border.setStroke(1, 0xFF000000); //black bor
+
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            horlay.setBackgroundDrawable(border);
+        } else {
+            horlay.setBackground(border);
+        }
 
         LinearLayout.LayoutParams LLParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
+                50);
 
         horlay.setWeightSum(6f);
         horlay.setLayoutParams(LLParams);
         TextView message = new TextView(this);
         message.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 50));
-        message.setText(name + " - mmr " + Integer.toString((int) mmr));
+        message.setText("  " + name + " - mmr " + Integer.toString((int) mmr));
+        message.setGravity(Gravity.CENTER);
         horlay.addView(message);
+        Button btnTag = new Button(this);
+        btnTag.setLayoutParams(new ViewGroup.LayoutParams(150, 50));
 
+        btnTag.setTextSize(8);
+        btnTag.setPadding(0,0,0,0);
 
-
+        if (!game_started) {
+            btnTag.setText("Commencer partie");
+        }else {
+            btnTag.setText("Voir la partie");
+        }
+        start_or_continue_game(id, btnTag);
+        horlay.addView(btnTag);
         listFriendView.addView(horlay);
 
 
@@ -177,15 +216,25 @@ public class LogedIn extends AppCompatActivity {
 
         LinearLayout horlay = new LinearLayout(this);
         horlay.setOrientation(LinearLayout.HORIZONTAL);
+        GradientDrawable border = new GradientDrawable();
+        border.setColor(0xFFFFFFFF); //white background
+        border.setStroke(1, 0xFF009900); //
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            horlay.setBackgroundDrawable(border);
+        } else {
+            horlay.setBackground(border);
+        }
 
         LinearLayout.LayoutParams LLParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
+
 
         horlay.setWeightSum(6f);
         horlay.setLayoutParams(LLParams);
         TextView message = new TextView(this);
         message.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 50));
         message.setText("Demande d'amis de " + name);
+        message.setGravity(Gravity.CENTER);
         horlay.addView(message);
         Button btnTag = new Button(this);
         btnTag.setLayoutParams(new ViewGroup.LayoutParams(50, 50));
@@ -237,7 +286,8 @@ public class LogedIn extends AppCompatActivity {
                                         JSONObject friend_json = list_friend_2.getJSONObject(i);
                                         add_friend_list_views((int) friend_json.get("id"),
                                                 (String) friend_json.get("name"),
-                                                (double) friend_json.get("mmr"));
+                                                (double) friend_json.get("mmr"),
+                                                (boolean) friend_json.get("game_started"));
 
                                     }
 
