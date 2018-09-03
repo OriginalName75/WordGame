@@ -47,6 +47,7 @@
                 android:layout_height="200dp">
 
                 <LinearLayout
+                    android:id="@+id/friend_list_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -90,6 +91,18 @@
                 android:layout_weight="1"
                 tools:layout_editor_absoluteX="274dp"
                 tools:layout_editor_absoluteY="249dp" />
+
+            <ScrollView
+                android:id="@+id/DriendListRequest"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <LinearLayout
+                    android:id="@+id/FriendListRequest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </ScrollView>
 
         </LinearLayout>
     </ScrollView>
