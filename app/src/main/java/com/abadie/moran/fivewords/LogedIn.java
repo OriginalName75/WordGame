@@ -207,7 +207,7 @@ public class LogedIn extends AppCompatActivity {
 
         });
     }
-    private void add_friend_list_views(int id, String name, double mmr, boolean game_started) {
+    private void add_friend_list_views(int id, String name, double mmr, boolean game_started, boolean can_play) {
 
         LinearLayout horlay = new LinearLayout(this);
         horlay.setOrientation(LinearLayout.HORIZONTAL);
@@ -229,23 +229,48 @@ public class LogedIn extends AppCompatActivity {
         horlay.setLayoutParams(LLParams);
         TextView message = new TextView(this);
         message.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 50));
-        message.setText("  " + name + " - mmr " + Integer.toString((int) mmr));
+        message.setText("  " + name );
         message.setGravity(Gravity.CENTER);
-        horlay.addView(message);
-        Button btnTag = new Button(this);
-        btnTag.setLayoutParams(new ViewGroup.LayoutParams(150, 50));
+        message.setTextColor(Color.BLACK);
+        TextView message3 = new TextView(this);
+        message3.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 50));
+        message3.setText(" | mmr : " + Integer.toString((int) mmr));
+        message3.setGravity(Gravity.CENTER);
+        message3.setTextSize(8);
 
-        btnTag.setTextSize(8);
+
+        Button btnTag = new Button(this);
+        btnTag.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 50));
+
+        btnTag.setTextSize(10);
         btnTag.setPadding(0,0,0,0);
 
         if (!game_started) {
             btnTag.setText("Commencer partie");
         }else {
-            btnTag.setText("Voir la partie");
+            btnTag.setText("Jouer");
         }
+        TextView message2 = new TextView(this);
+        message2.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 50));
+
+        message2.setGravity(Gravity.CENTER);
+        if (can_play) {
+            message2.setText(" | A vous !");
+            message2.setTextColor(Color.GREEN);
+        }else {
+            message2.setText(" | A l'adversaire");
+            message2.setTextColor(Color.GRAY);
+        }
+        message2.setTextSize(10);
+
+
+        horlay.addView(message);
+        horlay.addView(btnTag);
+        horlay.addView(message3);
+        horlay.addView(message2);
 
         start_or_continue_game(id, btnTag, game_started, name);
-        horlay.addView(btnTag);
+
         listFriendView.addView(horlay);
 
 
@@ -325,7 +350,8 @@ public class LogedIn extends AppCompatActivity {
                                         add_friend_list_views((int) friend_json.get("id"),
                                                 (String) friend_json.get("name"),
                                                 (double) friend_json.get("mmr"),
-                                                (boolean) friend_json.get("game_started"));
+                                                (boolean) friend_json.get("game_started"),
+                                                (boolean) friend_json.get("can_play"));
 
                                     }
 

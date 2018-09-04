@@ -1,6 +1,7 @@
 package com.abadie.moran.fivewords;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private View waitingScreen;
     private RequestQueue queue;
     private String current_letter;
+    private Intent intent_loged_in;
+    private TextView playag;
     private boolean your_turn_to_play = true;
     private final String url_read_game = "http://10.0.2.2:8000/read_game/";
     private final String url_send_letter = "http://10.0.2.2:8000/send_letter/";
@@ -65,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         waitingScreen = findViewById(R.id.WaitingScreen);
         text_adv = findViewById(R.id.adversaire);
         queue = Volley.newRequestQueue(this);
+        playag = findViewById(R.id.playag);
+        intent_loged_in = new Intent(this, LogedIn.class);
         read_boxes();
     }
 
@@ -80,6 +85,15 @@ public class MainActivity extends AppCompatActivity {
         crypted_password = RSA.crypt(password_connected, public_key_0, public_key_1);
         super.onResume();
         update_game();
+    }
+    public void return_click(View view) {
+        intent_loged_in.putExtra("LOGIN", login_connected);
+        intent_loged_in.putExtra("PASSWORD", password_connected);
+        intent_loged_in.putExtra("public_key_0", public_key_0);
+        intent_loged_in.putExtra("public_key_1", public_key_1);
+
+
+        startActivity(intent_loged_in);
     }
     private void clear_grid() {
         int j;
@@ -133,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 Log.d("yay", "yay 4");
+                playag.setText("Vous jouez contre " + obj.get("play_against"));
                 waitingScreen.setVisibility(View.INVISIBLE);
             }
         } catch (JSONException e) {
