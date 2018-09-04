@@ -23,6 +23,16 @@
             android:layout_width="match_parent"
             android:layout_height="50dp">
 
+            <TextView
+                android:id="@+id/adversaire"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:layout_weight="1"
+                android:text="C'est à votre adversaire de jouer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
@@ -1044,8 +1054,33 @@
         </android.support.constraint.ConstraintLayout>
 
 
-
-
-
     </LinearLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/WaitingScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/background_light"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/val"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Veuillez attendre"
+                android:textSize="18sp"
+                tools:text="Veuillez attendre" />
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

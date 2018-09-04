@@ -47,11 +47,16 @@ public class LogedIn extends AppCompatActivity {
     private final String url_add = "http://10.0.2.2:8000/add_friend/";
     private final String url_get_new_friend_list = "http://10.0.2.2:8000/get_new_friend_list/";
     private final String url_new_friend_answer = "http://10.0.2.2:8000/new_friend_answer/";
+
     private LinearLayout lisFriendView;
     private LinearLayout listFriendView;
     private Handler h = new Handler();
     private int delay = 10000;
     private Runnable runnable;
+    private TextView are_u_sure;
+    private View are_u_sure_window;
+    private boolean are_u_sure_mode = false;
+    private int id_save = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +70,8 @@ public class LogedIn extends AppCompatActivity {
         lisFriendView = findViewById(R.id.FriendListRequest);
         listFriendView = findViewById(R.id.friend_list_id);
         intent_game = new Intent(this, MainActivity.class);
-
-
+        are_u_sure = findViewById(R.id.are_u_sure);
+        are_u_sure_window = findViewById(R.id.are_u_sure_window);
     }
     @Override
     public void onResume() {
@@ -95,6 +100,27 @@ public class LogedIn extends AppCompatActivity {
         h.removeCallbacks(runnable); //stop handler when activity not visible
         super.onPause();
     }
+    public void are_u_sure_yes(View view) {
+        if (are_u_sure_mode) {
+            are_u_sure_mode = false;
+            are_u_sure_window.setVisibility(View.INVISIBLE);
+            intent_game.putExtra("LOGIN", login_connected);
+            intent_game.putExtra("PASSWORD", password_connected);
+            intent_game.putExtra("public_key_0", public_key_0);
+            intent_game.putExtra("public_key_1", public_key_1);
+            intent_game.putExtra("id_game", Integer.toString(id_save));
+            startActivity(intent_game);
+
+        }
+    }
+    public void are_u_sure_no(View view) {
+        if (are_u_sure_mode) {
+            are_u_sure_mode = false;
+            are_u_sure_window.setVisibility(View.INVISIBLE);
+        }
+
+    }
+
     private void friend_request_response_but(int id, boolean answer, Button b) {
         final int id_f = id;
         final boolean answer_f = answer;
@@ -158,16 +184,27 @@ public class LogedIn extends AppCompatActivity {
         }
     }
 
-    private void start_or_continue_game(int id, Button b) {
-        final int id_f = id;
+    private void start_or_continue_game(int id, Button b, boolean game_started, String name) {
+        id_save = id;
+        final boolean started = game_started;
+        final String name_f = name;
         b.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                intent_game.putExtra("LOGIN", login_connected);
-                intent_game.putExtra("PASSWORD", password_connected);
-                intent_game.putExtra("public_key_0", public_key_0);
-                intent_game.putExtra("public_key_1", public_key_1);
-                startActivity(intent_game);
+                if (started) {
+                    intent_game.putExtra("LOGIN", login_connected);
+                    intent_game.putExtra("PASSWORD", password_connected);
+                    intent_game.putExtra("public_key_0", public_key_0);
+                    intent_game.putExtra("public_key_1", public_key_1);
+                    intent_game.putExtra("id_game", Integer.toString(id_save));
+                    startActivity(intent_game);
+
+                } else {
+                    are_u_sure.setText("Voulez vous commencer une partie avec " + name_f + " ?");
+                    are_u_sure_window.setVisibility(View.VISIBLE);
+                    are_u_sure_mode = true;
+                }
             }
+
         });
     }
     private void add_friend_list_views(int id, String name, double mmr, boolean game_started) {
@@ -206,7 +243,8 @@ public class LogedIn extends AppCompatActivity {
         }else {
             btnTag.setText("Voir la partie");
         }
-        start_or_continue_game(id, btnTag);
+
+        start_or_continue_game(id, btnTag, game_started, name);
         horlay.addView(btnTag);
         listFriendView.addView(horlay);
 

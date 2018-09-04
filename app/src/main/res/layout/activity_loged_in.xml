@@ -107,4 +107,60 @@
         </LinearLayout>
     </ScrollView>
 
+    <LinearLayout
+        android:id="@+id/are_u_sure_window"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="#d500be20"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/are_u_sure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Error"
+                android:textColor="@android:color/background_light"
+                android:textSize="10sp"
+                tools:layout_editor_absoluteX="119dp"
+                tools:layout_editor_absoluteY="43dp"
+                tools:text="Error" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/are_u_sure_y"
+                    style="@android:style/Widget.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="are_u_sure_yes"
+                    android:text="Oui"
+                    tools:text="Oui" />
+
+                <Button
+                    android:id="@+id/are_u_sure_n"
+                    style="@android:style/Widget.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="are_u_sure_no"
+                    android:text="Non"
+                    tools:text="Non" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>
