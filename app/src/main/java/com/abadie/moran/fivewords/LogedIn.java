@@ -208,7 +208,8 @@ public class LogedIn extends AppCompatActivity {
 
         });
     }
-    private void add_friend_list_views(int id, String name, double mmr, boolean game_started, boolean can_play) {
+    private void add_friend_list_views(int id, String name, double mmr, boolean game_started,
+                                       boolean can_play, boolean game_finished) {
 
         LinearLayout horlay = new LinearLayout(this);
         horlay.setOrientation(LinearLayout.HORIZONTAL);
@@ -249,6 +250,9 @@ public class LogedIn extends AppCompatActivity {
         if (!game_started) {
             btnTag.setText("Commencer partie");
             btnTag.setLayoutParams(new ViewGroup.LayoutParams(170, 50));
+        } else if (game_finished) {
+            btnTag.setText("Voire score");
+            btnTag.setLayoutParams(new ViewGroup.LayoutParams(150, 50));
         }else {
             btnTag.setText("Jouer");
             btnTag.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 50));
@@ -258,9 +262,13 @@ public class LogedIn extends AppCompatActivity {
 
         message2.setGravity(Gravity.CENTER);
         if (game_started) {
-            if (can_play) {
+            if (game_finished) {
+                message2.setText(" | Partie terminée");
+                message2.setTextColor(Color.RED);
+            } else if (can_play) {
                 message2.setText(" | A vous !");
                 message2.setTextColor(Color.GREEN);
+
             }else {
                 message2.setText(" | A l'adversaire");
                 message2.setTextColor(Color.GRAY);
@@ -359,7 +367,8 @@ public class LogedIn extends AppCompatActivity {
                                                 (String) friend_json.get("name"),
                                                 (double) friend_json.get("mmr"),
                                                 (boolean) friend_json.get("game_started"),
-                                                (boolean) friend_json.get("can_play"));
+                                                (boolean) friend_json.get("can_play"),
+                                                (boolean) friend_json.get("game_finished"));
 
                                     }
 

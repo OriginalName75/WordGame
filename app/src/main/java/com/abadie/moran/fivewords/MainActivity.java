@@ -3,14 +3,19 @@ package com.abadie.moran.fivewords;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -51,12 +56,15 @@ public class MainActivity extends AppCompatActivity {
     private RequestQueue queue;
     private String current_letter;
     private Intent intent_loged_in;
+    private ConstraintLayout grid_view;
+
     private TextView playag;
     private boolean your_turn_to_play = true;
     private final String url_read_game = "http://10.0.2.2:8000/read_game/";
     private final String url_send_letter = "http://10.0.2.2:8000/send_letter/";
     private final String url_send_letter_grid = "http://10.0.2.2:8000/send_letter_grid/";
     private boolean waiting_for_other = false;
+    private boolean game_finished = false;
     private Handler h = new Handler();
     private int delay = 3000;
     private Runnable runnable;
@@ -75,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         playag = findViewById(R.id.playag);
         intent_loged_in = new Intent(this, LogedIn.class);
         read_boxes();
+        grid_view = findViewById(R.id.grid_view);
     }
 
     @Override
@@ -91,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
         update_game();
         h.postDelayed( runnable = new Runnable() {
             public void run() {
-                Log.d("ww", Boolean.toString(waiting_for_other));
-                if (waiting_for_other) {
+
+                if (!game_finished && waiting_for_other) {
                     update_game();
 
 
@@ -116,12 +125,24 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent_loged_in);
     }
     private void clear_grid() {
+        grid_view.removeAllViews();
         int j;
         int i;
         for (i = 0; i < 5; i++) {
             for (j = 0; j < 5; j++) {
                 boxes_letters[i][j].setText("");
                 boxes_letters[i][j].setTextColor(Color.BLACK);
+                GradientDrawable border = new GradientDrawable();
+                border.setColor(Color.parseColor("#FFC4A5")); //white background
+                border.setStroke(1, 0xFF000000); //black bor
+
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    boxes_letters[i][j].setBackgroundDrawable(border);
+                } else {
+                    boxes_letters[i][j].setBackground(border);
+                }
+
+
                 letters[i][j] = "";
             }
         }
@@ -136,11 +157,14 @@ public class MainActivity extends AppCompatActivity {
             boolean error_occured = (boolean) obj.get("error");
 
             if (!error_occured) {
+
                 your_turn_to_play= (boolean) obj.get("yourturn");
                 JSONArray grid = (JSONArray) obj.get("grid");
                 clear_grid();
                 current_letter = (String) obj.get("letter");
                 waiting_for_other = (boolean) obj.get("waiting_for_other");
+                game_finished= (boolean) obj.get("game_finished");
+                JSONObject data_finish= (JSONObject) obj.get("game_fi");
                 letter = current_letter;
                 for (int i = 0 ; i < grid.length(); i++) {
                     JSONObject friend_json = grid.getJSONObject(i);
@@ -156,17 +180,19 @@ public class MainActivity extends AppCompatActivity {
                     choosing_letter = true;
 
                 }
-                if (choosing_letter) {
-                    show_choose();
-                }else {
-                    if (waiting_for_other) {
-                        wait_for_other();
-                    }else {
-                        hide_choose();
-                    }
+                if (game_finished) {
 
+                    game_finished(data_finish, (String) obj.get("play_against"));
+                } else if (choosing_letter) {
+                    show_choose();
+
+                }else if (waiting_for_other) {
+                    wait_for_other();
+                }else {
+                    hide_choose();
                 }
-                Log.d("yay", "yay 4");
+
+
                 playag.setText("Vous jouez contre " + obj.get("play_against"));
                 waitingScreen.setVisibility(View.INVISIBLE);
             }
@@ -231,7 +257,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject obj = new JSONObject(response);
-                            Log.d("yay", "yay");
                             update_game_from_json(obj);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -350,7 +375,10 @@ public class MainActivity extends AppCompatActivity {
                 resID = getResources().getIdentifier("boxText" + Integer.toString(i) + Integer.toString(j), "id", getPackageName());
                 boxes_letters[i][j] =findViewById(resID);
                 boxes_letters[i][j].setTextSize(20);
+
                 letters[i][j] = "";
+
+
                 boxes[i][j].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v)
@@ -397,10 +425,104 @@ public class MainActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(waitingScreen.getWindowToken(), 0);
 
     }
+    private void game_finished(JSONObject data_finish, String name_other) throws JSONException {
+        JSONObject my = (JSONObject) data_finish.get("my");
+        JSONObject other = (JSONObject) data_finish.get("other");
+        int my_points = (int) my.get("points");
+        int other_points = (int) other.get("points");
+        editText.setVisibility(View.INVISIBLE);
+        text_adv.setVisibility(View.VISIBLE);
+        String text = " Vous : "  + Integer.toString(my_points) + " - " + name_other
+                + " : " + Integer.toString(other_points);
+        if (my_points > other_points) {
+            text_adv.setTextColor(Color.GREEN);
+            text += " ; " + " Vous avez gagné";
+        }else if (my_points == other_points) {
+            text_adv.setTextColor(Color.GRAY);
+            text += " ; " + " égalité !";
+        }else {
+            text_adv.setTextColor(Color.RED);
+            text += " ; " + " Perdu.";
+        }
+        text_adv.setText(text);
+        text_choose.setVisibility(View.INVISIBLE);
+        edit_text_box.setVisibility(View.INVISIBLE);
+        button.setVisibility(View.INVISIBLE);
+        // TODO kill screen
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(waitingScreen.getWindowToken(), 0);
+        old_i = -1;
+        old_j = -1;
+
+        JSONArray grid = (JSONArray) my.get("dots");
+        ArrayList<int[]> list = new ArrayList<int[]>();
+        for (int i = 0 ; i < grid.length(); i++) {
+            JSONObject friend_json = grid.getJSONObject(i);
+
+            boolean is_line = (boolean) friend_json.get("line");
+
+            int fro = (int) friend_json.get("i");
+
+            int to = (int) friend_json.get("j");
+
+            int index_line = (int) friend_json.get("index_line");
+
+
+            for (int k = fro; k <= to; k++) {
+                GradientDrawable border = new GradientDrawable();
+
+                border.setStroke(1, 0xFF000000);
+                int new_i;
+                int new_j;
+                if (is_line) {
+                    border.setColor(Color.parseColor("#C28EF2"));
+                    new_i = k;
+                    new_j = index_line;
+
+                }else {
+                    new_i = index_line;
+                    new_j = k;
+
+                    border.setColor(Color.parseColor("#AF59FF"));
+                }
+                boolean found = false;
+                for (int[] val : list) {
+                    if (val[0] == new_i && val[1] == new_j) {
+                        Log.d("yay", "yayayayayay");
+                        border.setColor(Color.parseColor("#8400FF"));
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    int[] vals = new int[2];
+                    vals[0] = new_i;
+                    vals[1] = new_j;
+                    list.add(vals);
+                }
+
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    boxes_letters[new_i][new_j].setBackgroundDrawable(border);
+                } else {
+                    boxes_letters[new_i][new_j].setBackground(border);
+                }
+
+
+            }
+
+        }
+
+
+
+
+
+    }
+
     private void wait_for_other() {
         editText.setVisibility(View.INVISIBLE);
         text_adv.setVisibility(View.VISIBLE);
-
+        text_adv.setText("C'est à votre adversaire de jouer");
+        text_adv.setTextColor(Color.GRAY);
         text_choose.setVisibility(View.INVISIBLE);
         edit_text_box.setVisibility(View.INVISIBLE);
         button.setVisibility(View.INVISIBLE);

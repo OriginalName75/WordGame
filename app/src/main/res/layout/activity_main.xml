@@ -110,14 +110,22 @@
             </LinearLayout>
 
         </android.support.constraint.ConstraintLayout>
-        <android.support.constraint.ConstraintLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
+
+        <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/grid_view_core"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            xmlns:app="http://schemas.android.com/apk/res-auto">
+            android:layout_height="match_parent">
 
             <!-- first Line -->
 
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/grid_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.constraint.ConstraintLayout>
 
             <ImageView
                 android:id="@+id/box00"
@@ -136,6 +144,7 @@
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent=".20"
                 app:srcCompat="@mipmap/square_custom_foreground" />
+
             <ImageView
                 android:id="@+id/box01"
                 android:layout_width="0dp"
@@ -212,14 +221,16 @@
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent=".20"
                 app:srcCompat="@mipmap/square_custom_foreground" />
+
             <TextView
 
                 android:id="@+id/boxText00"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -228,87 +239,90 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
+
             <TextView
 
                 android:id="@+id/boxText01"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
+
                 app:layout_constraintHorizontal_bias="0.25"
-
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
 
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
+
             <TextView
 
                 android:id="@+id/boxText02"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
+
                 app:layout_constraintHorizontal_bias="0.5"
-
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
 
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
+
             <TextView
 
                 android:id="@+id/boxText03"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
+
                 app:layout_constraintHorizontal_bias="0.75"
-
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
 
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
+
             <TextView
-                android:gravity="center"
                 android:id="@+id/boxText04"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:gravity="center"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
+
                 app:layout_constraintHorizontal_bias="1.0"
-
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
 
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
 
             <!-- 2nd Line -->
             <ImageView
@@ -328,6 +342,7 @@
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent=".20"
                 app:srcCompat="@mipmap/square_custom_foreground" />
+
             <ImageView
                 android:id="@+id/box11"
                 android:layout_width="0dp"
@@ -404,14 +419,16 @@
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent=".20"
                 app:srcCompat="@mipmap/square_custom_foreground" />
+
             <TextView
 
                 android:id="@+id/boxText10"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -420,87 +437,90 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.25"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
+
             <TextView
 
                 android:id="@+id/boxText11"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
+
                 app:layout_constraintHorizontal_bias="0.25"
-
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
 
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.25"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
+
             <TextView
 
                 android:id="@+id/boxText12"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
+
                 app:layout_constraintHorizontal_bias="0.5"
-
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
 
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.25"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
+
             <TextView
 
                 android:id="@+id/boxText13"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
+
                 app:layout_constraintHorizontal_bias="0.75"
-
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
 
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.25"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
+
             <TextView
-                android:gravity="center"
                 android:id="@+id/boxText14"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:gravity="center"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
+
                 app:layout_constraintHorizontal_bias="1.0"
-
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
 
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.25"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
             <!-- 3nd Line -->
             <ImageView
                 android:id="@+id/box20"
@@ -519,6 +539,7 @@
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent=".20"
                 app:srcCompat="@mipmap/square_custom_foreground" />
+
             <ImageView
                 android:id="@+id/box21"
                 android:layout_width="0dp"
@@ -602,8 +623,9 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -612,87 +634,90 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
+
             <TextView
 
                 android:id="@+id/boxText21"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
+
                 app:layout_constraintHorizontal_bias="0.25"
-
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
 
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
+
             <TextView
 
                 android:id="@+id/boxText22"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
+
                 app:layout_constraintHorizontal_bias="0.5"
-
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
 
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
+
             <TextView
 
                 android:id="@+id/boxText23"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
+
                 app:layout_constraintHorizontal_bias="0.75"
-
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
 
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
+
             <TextView
-                android:gravity="center"
                 android:id="@+id/boxText24"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:gravity="center"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
+
                 app:layout_constraintHorizontal_bias="1.0"
-
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
 
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
 
             <!-- 4th Line -->
             <ImageView
@@ -712,6 +737,7 @@
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent=".20"
                 app:srcCompat="@mipmap/square_custom_foreground" />
+
             <ImageView
                 android:id="@+id/box31"
                 android:layout_width="0dp"
@@ -788,14 +814,16 @@
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent=".20"
                 app:srcCompat="@mipmap/square_custom_foreground" />
+
             <TextView
 
                 android:id="@+id/boxText30"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -804,48 +832,50 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.75"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
+
             <TextView
 
                 android:id="@+id/boxText31"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
+
                 app:layout_constraintHorizontal_bias="0.25"
-
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
 
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.75"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
+
             <TextView
 
                 android:id="@+id/boxText32"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
+
                 app:layout_constraintHorizontal_bias="0.5"
-
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
 
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.75"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
+
             <TextView
 
                 android:id="@+id/boxText33"
@@ -853,40 +883,41 @@
                 android:layout_height="0dp"
                 android:gravity="center"
 
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
+
                 app:layout_constraintHorizontal_bias="0.75"
-
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
 
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.75"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
+
             <TextView
-                android:gravity="center"
                 android:id="@+id/boxText34"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:gravity="center"
+
+                android:text=""
 
                 app:layout_constraintBottom_toBottomOf="parent"
-
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
+
                 app:layout_constraintHorizontal_bias="1.0"
-
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
 
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.75"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
             <!-- 3nd Line -->
             <ImageView
                 android:id="@+id/box40"
@@ -905,6 +936,7 @@
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent=".20"
                 app:srcCompat="@mipmap/square_custom_foreground" />
+
             <ImageView
                 android:id="@+id/box41"
                 android:layout_width="0dp"
@@ -982,14 +1014,16 @@
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent=".20"
                 app:srcCompat="@mipmap/square_custom_foreground" />
+
             <TextView
 
                 android:id="@+id/boxText40"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -998,87 +1032,90 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
+
             <TextView
 
                 android:id="@+id/boxText41"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
+
                 app:layout_constraintHorizontal_bias="0.25"
-
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
 
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
+
             <TextView
 
                 android:id="@+id/boxText42"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
+
                 app:layout_constraintHorizontal_bias="0.5"
-
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
 
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
+
             <TextView
 
                 android:id="@+id/boxText43"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
+
                 app:layout_constraintHorizontal_bias="0.75"
-
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
 
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
+
             <TextView
-                android:gravity="center"
                 android:id="@+id/boxText44"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:gravity="center"
+                android:text=""
 
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_default="percent"
                 app:layout_constraintHeight_percent=".20"
+
                 app:layout_constraintHorizontal_bias="1.0"
-
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
 
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1"
                 app:layout_constraintWidth_default="percent"
-                app:layout_constraintWidth_percent=".20"
-                android:text="" />
+                app:layout_constraintWidth_percent=".20" />
         </android.support.constraint.ConstraintLayout>
 
 
