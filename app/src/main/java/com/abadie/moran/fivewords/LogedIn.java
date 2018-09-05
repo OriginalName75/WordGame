@@ -82,6 +82,7 @@ public class LogedIn extends AppCompatActivity {
         hello_text.setText("Bonjour " + login_connected);
         crypted_password = RSA.crypt(password_connected, public_key_0, public_key_1);
         printFriendsREquests();
+        Log.d("rerun", "rerturn");
         h.postDelayed( runnable = new Runnable() {
             public void run() {
                 printFriendsREquests();
@@ -240,34 +241,41 @@ public class LogedIn extends AppCompatActivity {
 
 
         Button btnTag = new Button(this);
-        btnTag.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 50));
+
 
         btnTag.setTextSize(10);
         btnTag.setPadding(0,0,0,0);
 
         if (!game_started) {
             btnTag.setText("Commencer partie");
+            btnTag.setLayoutParams(new ViewGroup.LayoutParams(170, 50));
         }else {
             btnTag.setText("Jouer");
+            btnTag.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 50));
         }
         TextView message2 = new TextView(this);
         message2.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 50));
 
         message2.setGravity(Gravity.CENTER);
-        if (can_play) {
-            message2.setText(" | A vous !");
-            message2.setTextColor(Color.GREEN);
-        }else {
-            message2.setText(" | A l'adversaire");
-            message2.setTextColor(Color.GRAY);
+        if (game_started) {
+            if (can_play) {
+                message2.setText(" | A vous !");
+                message2.setTextColor(Color.GREEN);
+            }else {
+                message2.setText(" | A l'adversaire");
+                message2.setTextColor(Color.GRAY);
+            }
         }
+
         message2.setTextSize(10);
 
 
         horlay.addView(message);
         horlay.addView(btnTag);
         horlay.addView(message3);
-        horlay.addView(message2);
+        if (game_started) {
+            horlay.addView(message2);
+        }
 
         start_or_continue_game(id, btnTag, game_started, name);
 

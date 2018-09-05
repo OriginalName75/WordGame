@@ -3,6 +3,7 @@ package com.abadie.moran.fivewords;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -56,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
     private final String url_send_letter = "http://10.0.2.2:8000/send_letter/";
     private final String url_send_letter_grid = "http://10.0.2.2:8000/send_letter_grid/";
     private boolean waiting_for_other = false;
+    private Handler h = new Handler();
+    private int delay = 3000;
+    private Runnable runnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +89,22 @@ public class MainActivity extends AppCompatActivity {
         crypted_password = RSA.crypt(password_connected, public_key_0, public_key_1);
         super.onResume();
         update_game();
+        h.postDelayed( runnable = new Runnable() {
+            public void run() {
+                Log.d("ww", Boolean.toString(waiting_for_other));
+                if (waiting_for_other) {
+                    update_game();
+
+
+                }
+                h.postDelayed(runnable, delay);
+            }
+        }, delay);
+    }
+    @Override
+    protected void onPause() {
+        h.removeCallbacks(runnable); //stop handler when activity not visible
+        super.onPause();
     }
     public void return_click(View view) {
         intent_loged_in.putExtra("LOGIN", login_connected);
@@ -114,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         try {
 
             boolean error_occured = (boolean) obj.get("error");
-            Log.d("yay", "yay2");
+
             if (!error_occured) {
                 your_turn_to_play= (boolean) obj.get("yourturn");
                 JSONArray grid = (JSONArray) obj.get("grid");
@@ -130,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 }
-                Log.d("yay", "yay 3");
+
                 choosing_letter = false;
                 if (current_letter.length() == 0 && your_turn_to_play) {
                     choosing_letter = true;
