@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -57,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
     private String current_letter;
     private Intent intent_loged_in;
     private ConstraintLayout grid_view;
-
+    private Button seeMe;
+    private Button seeOther;
     private TextView playag;
     private boolean your_turn_to_play = true;
     private final String url_read_game = "http://10.0.2.2:8000/read_game/";
@@ -68,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
     private Handler h = new Handler();
     private int delay = 3000;
     private Runnable runnable;
+    public boolean my_grid = true;
+    private JSONObject data_finish_memory;
+    private String name_other_memory;
+    private JSONArray my_grid_data;
+    private JSONArray other_grid_data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +90,9 @@ public class MainActivity extends AppCompatActivity {
         playag = findViewById(R.id.playag);
         intent_loged_in = new Intent(this, LogedIn.class);
         read_boxes();
-        grid_view = findViewById(R.id.grid_view);
+        seeMe = findViewById(R.id.SeeMe);
+        seeOther = findViewById(R.id.SeeOther);
+        grid_view= findViewById(R.id.grid_view);
     }
 
     @Override
@@ -151,6 +160,18 @@ public class MainActivity extends AppCompatActivity {
         boxes_letters[i][j].setText(letter);
         letters[i][j] = letter;
     }
+    private void update_grid_from_json(JSONObject data_finish, JSONArray grid) throws JSONException {
+
+
+        for (int i = 0 ; i < grid.length(); i++) {
+            JSONObject friend_json = grid.getJSONObject(i);
+            updategrid((int) friend_json.get("row"), (int) friend_json.get("col")
+                    , (String) friend_json.get("letter"));
+
+
+
+        }
+    }
     public void update_game_from_json(JSONObject obj) {
         try {
 
@@ -160,20 +181,15 @@ public class MainActivity extends AppCompatActivity {
 
                 your_turn_to_play= (boolean) obj.get("yourturn");
                 JSONArray grid = (JSONArray) obj.get("grid");
+                my_grid_data = grid;
+                other_grid_data = (JSONArray) obj.get("othergrid");;
                 clear_grid();
                 current_letter = (String) obj.get("letter");
                 waiting_for_other = (boolean) obj.get("waiting_for_other");
                 game_finished= (boolean) obj.get("game_finished");
-                JSONObject data_finish= (JSONObject) obj.get("game_fi");
                 letter = current_letter;
-                for (int i = 0 ; i < grid.length(); i++) {
-                    JSONObject friend_json = grid.getJSONObject(i);
-                    updategrid((int) friend_json.get("row"), (int) friend_json.get("col")
-                            , (String) friend_json.get("letter"));
-
-
-
-                }
+                JSONObject data_finish= (JSONObject) obj.get("game_fi");
+                update_grid_from_json(data_finish, grid);
 
                 choosing_letter = false;
                 if (current_letter.length() == 0 && your_turn_to_play) {
@@ -181,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 if (game_finished) {
-
+                    my_grid = true;
                     game_finished(data_finish, (String) obj.get("play_against"));
                 } else if (choosing_letter) {
                     show_choose();
@@ -411,6 +427,27 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    public void my_grill(View view) {
+        my_grid = true;
+        clear_grid();
+        try {
+            update_grid_from_json(data_finish_memory, my_grid_data);
+            game_finished(data_finish_memory,name_other_memory);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    public void adv_grill(View view) {
+        my_grid = false;
+        clear_grid();
+        try {
+            update_grid_from_json(data_finish_memory, other_grid_data);
+            game_finished(data_finish_memory,name_other_memory);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
     private void hide_choose() {
         editText.setVisibility(View.INVISIBLE);
         text_adv.setVisibility(View.INVISIBLE);
@@ -418,6 +455,8 @@ public class MainActivity extends AppCompatActivity {
         text_choose.setText("Ajouter : " + current_letter.toUpperCase());
         edit_text_box.setVisibility(View.INVISIBLE);
         button.setVisibility(View.VISIBLE);
+        seeMe.setVisibility(View.INVISIBLE);
+        seeOther.setVisibility(View.INVISIBLE);
         old_i = -1;
         old_j = -1;
         // TODO kill screen
@@ -426,12 +465,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void game_finished(JSONObject data_finish, String name_other) throws JSONException {
+        data_finish_memory = data_finish;
+        name_other_memory = name_other;
         JSONObject my = (JSONObject) data_finish.get("my");
         JSONObject other = (JSONObject) data_finish.get("other");
         int my_points = (int) my.get("points");
         int other_points = (int) other.get("points");
         editText.setVisibility(View.INVISIBLE);
         text_adv.setVisibility(View.VISIBLE);
+        seeMe.setVisibility(View.VISIBLE);
+        seeOther.setVisibility(View.VISIBLE);
         String text = " Vous : "  + Integer.toString(my_points) + " - " + name_other
                 + " : " + Integer.toString(other_points);
         if (my_points > other_points) {
@@ -448,14 +491,23 @@ public class MainActivity extends AppCompatActivity {
         text_choose.setVisibility(View.INVISIBLE);
         edit_text_box.setVisibility(View.INVISIBLE);
         button.setVisibility(View.INVISIBLE);
+
         // TODO kill screen
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(waitingScreen.getWindowToken(), 0);
         old_i = -1;
         old_j = -1;
 
-        JSONArray grid = (JSONArray) my.get("dots");
+
+        JSONArray grid;
+        if (my_grid == true) {
+            grid = (JSONArray) my.get("dots");
+        }else {
+            grid = (JSONArray) other.get("dots");
+        }
         ArrayList<int[]> list = new ArrayList<int[]>();
+        float len_box_x =boxes_letters[0][0].getWidth();
+        float len_box_y =boxes_letters[0][0].getHeight();
         for (int i = 0 ; i < grid.length(); i++) {
             JSONObject friend_json = grid.getJSONObject(i);
 
@@ -467,6 +519,46 @@ public class MainActivity extends AppCompatActivity {
 
             int index_line = (int) friend_json.get("index_line");
 
+            TextView box = new TextView(this);
+
+            GradientDrawable border_box = new GradientDrawable();
+            if (is_line) {
+                border_box.setStroke(3, Color.BLUE);
+            }else {
+                border_box.setStroke(3, Color.RED);
+            }
+            border_box.setColor(Color.TRANSPARENT);
+
+            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                box.setBackgroundDrawable(border_box);
+            } else {
+                box.setBackground(border_box);
+            }
+
+            int index_start ;
+            int index_end ;
+            int len_x ;
+            int len_y ;
+            if (!is_line) {
+                index_start = index_line;
+                index_end = fro;
+                len_x = (int) (len_box_x*(to - fro + 1));
+                len_y = (int) (len_box_y);
+            }else {
+                index_start = fro;
+                index_end = index_line;
+                len_x = (int) len_box_x;
+                len_y = (int) (len_box_y*(to - fro + 1));
+
+            }
+            float left = boxes_letters[index_start][index_end].getX();
+            float right = boxes_letters[index_start][index_end].getY();
+            box.setLayoutParams(new ViewGroup.LayoutParams(len_x, len_y));
+            box.setX(left);
+            box.setY(right);
+
+
+            grid_view.addView(box);
 
             for (int k = fro; k <= to; k++) {
                 GradientDrawable border = new GradientDrawable();
@@ -488,7 +580,7 @@ public class MainActivity extends AppCompatActivity {
                 boolean found = false;
                 for (int[] val : list) {
                     if (val[0] == new_i && val[1] == new_j) {
-                        Log.d("yay", "yayayayayay");
+
                         border.setColor(Color.parseColor("#8400FF"));
                         found = true;
                         break;
@@ -524,6 +616,8 @@ public class MainActivity extends AppCompatActivity {
         text_adv.setText("C'est à votre adversaire de jouer");
         text_adv.setTextColor(Color.GRAY);
         text_choose.setVisibility(View.INVISIBLE);
+        seeMe.setVisibility(View.INVISIBLE);
+        seeOther.setVisibility(View.INVISIBLE);
         edit_text_box.setVisibility(View.INVISIBLE);
         button.setVisibility(View.INVISIBLE);
         // TODO kill screen
@@ -537,6 +631,8 @@ public class MainActivity extends AppCompatActivity {
         editText.setVisibility(View.VISIBLE);
         text_adv.setVisibility(View.INVISIBLE);
         text_choose.setVisibility(View.VISIBLE);
+        seeMe.setVisibility(View.INVISIBLE);
+        seeOther.setVisibility(View.INVISIBLE);
         text_choose.setText("Veuillez ajouter :");
         edit_text_box.setVisibility(View.VISIBLE);
         button.setVisibility(View.VISIBLE);

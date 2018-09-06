@@ -49,15 +49,47 @@
             android:layout_width="match_parent"
             android:layout_height="50dp">
 
-            <TextView
-                android:id="@+id/adversaire"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                android:layout_weight="1"
-                android:text="C'est à votre adversaire de jouer"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+                <TextView
+                    android:id="@+id/adversaire"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+
+                    android:layout_weight="1"
+                    android:text="C'est à votre adversaire de jouer"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/SeeMe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="my_grill"
+                        android:text="Votre Grille"
+                        android:textSize="8sp" />
+
+                    <Button
+                        android:id="@+id/SeeOther"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="adv_grill"
+                        android:text="Grille adversaire"
+                        android:textSize="8sp" />
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -119,13 +151,6 @@
 
             <!-- first Line -->
 
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/grid_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </android.support.constraint.ConstraintLayout>
 
             <ImageView
                 android:id="@+id/box00"
@@ -1116,6 +1141,13 @@
                 app:layout_constraintVertical_bias="1"
                 app:layout_constraintWidth_default="percent"
                 app:layout_constraintWidth_percent=".20" />
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/grid_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.constraint.ConstraintLayout>
         </android.support.constraint.ConstraintLayout>
 
 
