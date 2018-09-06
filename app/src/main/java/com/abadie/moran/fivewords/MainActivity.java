@@ -65,11 +65,13 @@ public class MainActivity extends AppCompatActivity {
     private final String url_read_game = "http://10.0.2.2:8000/read_game/";
     private final String url_send_letter = "http://10.0.2.2:8000/send_letter/";
     private final String url_send_letter_grid = "http://10.0.2.2:8000/send_letter_grid/";
+    private final String url_quit = "http://10.0.2.2:8000/quit/";
     private boolean waiting_for_other = false;
     private boolean game_finished = false;
     private Handler h = new Handler();
     private int delay = 3000;
     private Runnable runnable;
+    private Button return_button;
     public boolean my_grid = true;
     private JSONObject data_finish_memory;
     private String name_other_memory;
@@ -93,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         seeMe = findViewById(R.id.SeeMe);
         seeOther = findViewById(R.id.SeeOther);
         grid_view= findViewById(R.id.grid_view);
+        return_button = findViewById(R.id.return_button);
     }
 
     @Override
@@ -125,6 +128,9 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
     public void return_click(View view) {
+        if (game_finished) {
+            send_quit();
+        }
         intent_loged_in.putExtra("LOGIN", login_connected);
         intent_loged_in.putExtra("PASSWORD", password_connected);
         intent_loged_in.putExtra("public_key_0", public_key_0);
@@ -133,8 +139,51 @@ public class MainActivity extends AppCompatActivity {
 
         startActivity(intent_loged_in);
     }
+    private void send_quit() {
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url_quit,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject obj = new JSONObject(response);
+                            update_game_from_json(obj);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+
+                HashMap<String, String> params_post = new HashMap<String, String>();
+
+                params_post.put("login", login_connected);
+
+                params_post.put("password", crypted_password);
+                params_post.put("public_key", public_key_1);
+                params_post.put("id_game", Integer.toString(id_game));
+                return params_post;
+            }
+        };
+        queue.add(postRequest);    }
     private void clear_grid() {
         grid_view.removeAllViews();
+        return_button.setText("Retour");
         int j;
         int i;
         for (i = 0; i < 5; i++) {
@@ -497,7 +546,7 @@ public class MainActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(waitingScreen.getWindowToken(), 0);
         old_i = -1;
         old_j = -1;
-
+        return_button.setText("Quitter/Rejouer");
 
         JSONArray grid;
         if (my_grid == true) {
