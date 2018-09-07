@@ -222,6 +222,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void update_game_from_json(JSONObject obj) {
+        old_i = -1;
+        old_j = -1;
         try {
 
             boolean error_occured = (boolean) obj.get("error");
@@ -408,6 +410,7 @@ public class MainActivity extends AppCompatActivity {
         queue.add(postRequest);
     }
     public void sendMessage(View view) {
+
         if (!waiting_for_other) {
             if (choosing_letter) {
                 String message = editText.getText().toString();
@@ -427,6 +430,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
+        old_i = -1;
+        old_j = -1;
     }
     private void read_boxes() {
         int j;

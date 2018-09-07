@@ -6,18 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".LogedIn">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/TopView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="37dp"
+            android:layout_weight="0"
+            android:gravity="top"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="37dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -43,11 +48,21 @@
                     android:layout_weight="1"
                     android:gravity="center" />
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Bototo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:gravity="bottom"
+            android:orientation="vertical">
 
             <ScrollView
                 android:id="@+id/friendList"
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
                 <LinearLayout
                     android:id="@+id/friend_list_id"
@@ -60,57 +75,67 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="150dp"
+                android:layout_weight="0"
+                android:gravity="bottom"
+                android:orientation="vertical">
 
-                <android.support.design.widget.TextInputLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_weight="1">
+                    android:orientation="horizontal">
 
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/new_friend_text"
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="1">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/new_friend_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Login du contact" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/add_friend"
+                        style="@android:style/Widget.Button.Inset"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/holo_green_dark"
+                        android:onClick="click_add_friend"
+                        android:text="Ajouter contacte"
+                        tools:layout_editor_absoluteX="129dp"
+                        tools:layout_editor_absoluteY="347dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/error_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    tools:layout_editor_absoluteX="274dp"
+                    tools:layout_editor_absoluteY="249dp" />
+
+                <ScrollView
+                    android:id="@+id/DriendListRequest"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp">
+
+                    <LinearLayout
+                        android:id="@+id/FriendListRequest"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Login du contact" />
-                </android.support.design.widget.TextInputLayout>
-
-                <Button
-                    android:id="@+id/add_friend"
-                    style="@android:style/Widget.Button.Inset"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/holo_green_dark"
-                    android:onClick="click_add_friend"
-                    android:text="Ajouter contacte"
-                    tools:layout_editor_absoluteX="129dp"
-                    tools:layout_editor_absoluteY="347dp" />
+                        android:orientation="vertical" />
+                </ScrollView>
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/error_message"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                tools:layout_editor_absoluteX="274dp"
-                tools:layout_editor_absoluteY="249dp" />
-
-            <ScrollView
-                android:id="@+id/DriendListRequest"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-
-                <LinearLayout
-                    android:id="@+id/FriendListRequest"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" />
-            </ScrollView>
-
         </LinearLayout>
-    </ScrollView>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/are_u_sure_window"

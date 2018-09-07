@@ -229,39 +229,43 @@ public class LogedIn extends AppCompatActivity {
         }
 
         LinearLayout.LayoutParams LLParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                50);
+                LinearLayout.LayoutParams.WRAP_CONTENT);
 
         horlay.setWeightSum(6f);
         horlay.setLayoutParams(LLParams);
         TextView message = new TextView(this);
-        message.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 50));
+        message.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
         message.setText("  " + name );
         message.setGravity(Gravity.CENTER);
         message.setTextColor(Color.BLACK);
         TextView message3 = new TextView(this);
         message3.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 50));
-        message3.setText(" | mmr : " + Integer.toString((int) mmr));
+        message3.setText(" | elo : " + Integer.toString((int) mmr));
         message3.setGravity(Gravity.CENTER);
-        message3.setTextSize(8);
+        message3.setTextSize(12);
 
 
         Button btnTag = new Button(this);
 
 
-        btnTag.setTextSize(10);
+        btnTag.setTextSize(12);
         btnTag.setPadding(0,0,0,0);
 
         if (!game_started) {
             btnTag.setText("Commencer partie");
-            btnTag.setLayoutParams(new ViewGroup.LayoutParams(170, 50));
+
         } else if (game_finished) {
 
             btnTag.setText("Voire score");
-            btnTag.setLayoutParams(new ViewGroup.LayoutParams(150, 50));
+
         }else {
             btnTag.setText("Jouer");
-            btnTag.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 50));
+
         }
+        btnTag.setLayoutParams(new ViewGroup.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
         TextView message2 = new TextView(this);
         message2.setLayoutParams(new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 50));
 
@@ -285,15 +289,16 @@ public class LogedIn extends AppCompatActivity {
             }
         }
 
-        message2.setTextSize(10);
+        message2.setTextSize(12);
 
 
         horlay.addView(message);
-        horlay.addView(btnTag);
+
         horlay.addView(message3);
         if (game_started) {
             horlay.addView(message2);
         }
+        horlay.addView(btnTag);
 
         start_or_continue_game(id, btnTag, game_started, name);
 
@@ -315,7 +320,7 @@ public class LogedIn extends AppCompatActivity {
         }
 
         LinearLayout.LayoutParams LLParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
+                70);
 
 
         horlay.setWeightSum(6f);
@@ -382,7 +387,8 @@ public class LogedIn extends AppCompatActivity {
                                                 (boolean) friend_json.get("wait_quit"));
 
                                     }
-
+                                    hello_text.setText("Bonjour " + login_connected + "(elo " +
+                                            Float.toString((float) obj.get("new_friend_list")) + ")");
 
                                 }else {
                                     logout();
