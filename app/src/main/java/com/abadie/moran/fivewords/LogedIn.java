@@ -387,8 +387,8 @@ public class LogedIn extends AppCompatActivity {
                                                 (boolean) friend_json.get("wait_quit"));
 
                                     }
-                                    hello_text.setText("Bonjour " + login_connected + "(elo " +
-                                            Float.toString((float) obj.get("new_friend_list")) + ")");
+                                    hello_text.setText("Bonjour " + login_connected + " (elo " +
+                                            Integer.toString((int) obj.get("elo")) + ")");
 
                                 }else {
                                     logout();

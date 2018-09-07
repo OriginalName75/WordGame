@@ -363,6 +363,11 @@ public class MainActivity extends AppCompatActivity {
     }
     public void send_letter_grid() {
         final String mess = letter;
+        final int old_i_f = old_i;
+        final int old_j_f = old_j;
+        boxes_letters[old_i][old_j].setText("");
+        Log.d("dddddddddddd", Integer.toString(old_i));
+        Log.d("dddddddddddd", Integer.toString(old_j));
         StringRequest postRequest = new StringRequest(Request.Method.POST, url_send_letter_grid,
                 new Response.Listener<String>()
                 {
@@ -401,13 +406,14 @@ public class MainActivity extends AppCompatActivity {
                 params_post.put("public_key", public_key_1);
                 params_post.put("letter", mess);
                 params_post.put("id_game", Integer.toString(id_game));
-                params_post.put("i", Integer.toString(old_i));
-                params_post.put("j", Integer.toString(old_j));
+                params_post.put("i", Integer.toString(old_i_f));
+                params_post.put("j", Integer.toString(old_j_f));
 
                 return params_post;
             }
         };
         queue.add(postRequest);
+
     }
     public void sendMessage(View view) {
 
@@ -430,8 +436,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
-        old_i = -1;
-        old_j = -1;
+
     }
     private void read_boxes() {
         int j;
