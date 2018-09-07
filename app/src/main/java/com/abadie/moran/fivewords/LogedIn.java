@@ -173,7 +173,7 @@ public class LogedIn extends AppCompatActivity {
         };
         queue.add(postRequest);
     }
-    public void logout(View view) {
+    public void logout() {
         try {
             CacheDir.writeAllCachedText(getApplicationContext(),  "USERDATA",
                     "");
@@ -183,6 +183,10 @@ public class LogedIn extends AppCompatActivity {
         }finally {
 
         }
+    }
+    public void logout(View view) {
+        logout();
+
     }
 
     private void start_or_continue_game(int id, Button b, boolean game_started, String name) {
@@ -209,7 +213,7 @@ public class LogedIn extends AppCompatActivity {
         });
     }
     private void add_friend_list_views(int id, String name, double mmr, boolean game_started,
-                                       boolean can_play, boolean game_finished) {
+                                       boolean can_play, boolean game_finished, boolean wait_quit) {
 
         LinearLayout horlay = new LinearLayout(this);
         horlay.setOrientation(LinearLayout.HORIZONTAL);
@@ -251,6 +255,7 @@ public class LogedIn extends AppCompatActivity {
             btnTag.setText("Commencer partie");
             btnTag.setLayoutParams(new ViewGroup.LayoutParams(170, 50));
         } else if (game_finished) {
+
             btnTag.setText("Voire score");
             btnTag.setLayoutParams(new ViewGroup.LayoutParams(150, 50));
         }else {
@@ -263,7 +268,12 @@ public class LogedIn extends AppCompatActivity {
         message2.setGravity(Gravity.CENTER);
         if (game_started) {
             if (game_finished) {
-                message2.setText(" | Partie terminée");
+                if (wait_quit) {
+                    message2.setText(" | L'adversaire doit quitter pour rejouter");
+                }else {
+                    message2.setText(" | Partie terminée");
+                }
+
                 message2.setTextColor(Color.RED);
             } else if (can_play) {
                 message2.setText(" | A vous !");
@@ -368,11 +378,14 @@ public class LogedIn extends AppCompatActivity {
                                                 (double) friend_json.get("mmr"),
                                                 (boolean) friend_json.get("game_started"),
                                                 (boolean) friend_json.get("can_play"),
-                                                (boolean) friend_json.get("game_finished"));
+                                                (boolean) friend_json.get("game_finished"),
+                                                (boolean) friend_json.get("wait_quit"));
 
                                     }
 
 
+                                }else {
+                                    logout();
                                 }
                             } finally {
 

@@ -682,7 +682,7 @@ public class MainActivity extends AppCompatActivity {
         text_choose.setVisibility(View.VISIBLE);
         seeMe.setVisibility(View.INVISIBLE);
         seeOther.setVisibility(View.INVISIBLE);
-        text_choose.setText("Veuillez ajouter :");
+        text_choose.setText("Choisissez une ");
         edit_text_box.setVisibility(View.VISIBLE);
         button.setVisibility(View.VISIBLE);
 
